@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aquaponics Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/static/images/aquaponics_bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .chat-wrapper {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            width: 70vw;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #chat-box {
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user {
+            background-color: #28a745;
+            align-self: flex-end;
+            text-align: right;
+            color: whitesmoke;
+        }
+
+        .bot {
+            background-color: #e2e3e5;
+            align-self: flex-start;
+        }
+
+        #chat-form {
+            display: flex;
+        }
+
+        #question {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid gray;
+            border-radius: 5px 0 0 5px;
+          
+            
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .chat-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .chat-controls button {
+            background-color: #007bff;
+            border-radius: 5px;
+            margin: 0 2px;
+        }
+
+        .chat-controls button:first-child {
+            background-color: #dc3545;
+        }
+        .container{
+          height: 100vh;
+          width: 100vw;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .container img{
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <img src="static/Image/fish.jpg" alt="">
+  <div class="chat-wrapper">
+      <h2 style="text-align: center; color: whitesmoke; background-color: #007bff; 
+      display: block; width: 95%;
+      margin: 0 auto;
+      padding: 1rem;
+      ">Aquaponics Fish Pond Q&A LLM Model</h2>
+      <div id="chat-box"></div>
+      <form id="chat-form">
+          <input type="text" id="question" name="question" placeholder="Ask your question..." required>
+          <button type="submit">➤</button>
+      </form>
+      <div class="chat-controls">
+          <button type="button" onclick="clearChat()">Clear Chat</button>
+          <button type="button" onclick="saveChat()">Save Chat</button>
+      </div>
+  </div>
+</div>
+
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    function typeText(element, text, speed = 30) {
+        let index = 0;
+        element.textContent = '';
+        const interval = setInterval(() => {
+            element.textContent += text.charAt(index);
+            index++;
+            if (index >= text.length) {
+                clearInterval(interval);
+            }
+        }, speed);
+    }
+
+    function clearChat() {
+        document.getElementById('chat-box').innerHTML = '';
+    }
+
+    function saveChat() {
+        const chatBox = document.getElementById('chat-box');
+        const messages = chatBox.querySelectorAll('.message');
+        let content = '';
+        messages.forEach(msg => {
+            const who = msg.classList.contains('user') ? 'You' : 'Bot';
+            content += `${who}: ${msg.textContent.trim()}\n`;
+        });
+        const blob = new Blob([content], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'chat_history.txt';
+        link.click();
+    }
+
+    document.getElementById('chat-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const questionInput = document.getElementById('question');
+        const question = questionInput.value.trim();
+        if (!question) return;
+
+        const chatBox = document.getElementById('chat-box');
+
+        const userMessage = document.createElement('div');
+        userMessage.classList.add('message', 'user');
+        userMessage.textContent = question;
+        chatBox.appendChild(userMessage);
+        questionInput.value = "";
+
+        const botMessage = document.createElement('div');
+        botMessage.classList.add('message', 'bot');
+        botMessage.textContent = "Thinking...";
+        chatBox.appendChild(botMessage);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        fetch('', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': csrftoken,
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: new URLSearchParams({ question: question })
+        })
+        .then(response => response.json())
+        .then(data => {
+            botMessage.textContent = "";
+            typeText(botMessage, data.answer);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        })
+        .catch(error => {
+            botMessage.textContent = "Something went wrong.";
+            console.error(error);
+        });
+    });
+</script>
+</body>
+</html>

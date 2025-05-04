@@ -1,0 +1,57 @@
+[
+    {
+        "context": "Fish tanks should have a pH level between 6.8 and 7.2 for optimal fish health in aquaponics systems.",
+        "question": "What pH level should fish tanks have in aquaponics?",
+        "answer": "Between 6.8 and 7.2."
+    },
+    {
+        "context": "Aquaponics systems can be built indoors or outdoors depending on climate and available space.",
+        "question": "What is the importance of Aquaponics in aquaponics?",
+        "answer": "Aquaponics systems can be built indoors or outdoors depending on climate and available space."
+    },
+    {
+        "context": "The plants in aquaponic systems act as natural water filters, removing harmful chemicals like nitrates.",
+        "question": "What is the importance of The in aquaponics?",
+        "answer": "The plants in aquaponic systems act as natural water filters, removing harmful chemicals like nitrates."
+    },
+    {
+        "context": "Water temperature should be maintained between 72\u00b0F and 78\u00b0F for most fish in an aquaponic system.",
+        "question": "What is the importance of Water in aquaponics?",
+        "answer": "Water temperature should be maintained between 72\u00b0F and 78\u00b0F for most fish in an aquaponic system."
+    },
+    {
+        "context": "In an aquaponic system, fish waste provides an organic nutrient source for the plants.",
+        "question": "What is the importance of In in aquaponics?",
+        "answer": "In an aquaponic system, fish waste provides an organic nutrient source for the plants."
+    },
+    {
+        "context": "A pump circulates the water through the grow bed where plants are cultivated in an aquaponic system.",
+        "question": "What is the importance of A in aquaponics?",
+        "answer": "A pump circulates the water through the grow bed where plants are cultivated in an aquaponic system."
+    },
+    {
+        "context": "Tilapia is a popular fish species for aquaponics systems due to its fast growth rate and hardiness.",
+        "question": "What is the importance of Tilapia in aquaponics?",
+        "answer": "Tilapia is a popular fish species for aquaponics systems due to its fast growth rate and hardiness."
+    },
+    {
+        "context": "In aquaponics, plants receive their nutrients from the waste produced by the fish, and the plants help clean the water.",
+        "question": "What is the importance of In in aquaponics?",
+        "answer": "In aquaponics, plants receive their nutrients from the waste produced by the fish, and the plants help clean the water."
+    },
+    {
+        "context": "Aquaponics systems need to be monitored regularly to ensure balanced pH, ammonia levels, and fish health.",
+        "question": "What is the importance of Aquaponics in aquaponics?",
+        "answer": "Aquaponics systems need to be monitored regularly to ensure balanced pH, ammonia levels, and fish health."
+    },
+    {
+        "context": "Aquaponic systems can use fish such as tilapia, trout, or catfish for best results.",
+        "question": "What is the importance of Aquaponic in aquaponics?",
+        "answer": "Aquaponic systems can use fish such as tilapia, trout, or catfish for best results."
+    },
+    {
+        "context": "The integration of aquaculture and hydroponics reduces the need for chemical fertilizers in farming.",
+        "question": "What is the importance of The in aquaponics?",
+        "answer": "The integration of aquaculture and hydroponics reduces the need for chemical fertilizers in farming."
+    }
+]
